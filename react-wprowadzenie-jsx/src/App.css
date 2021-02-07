@@ -1,0 +1,11 @@
+body {
+  background-color: rgba(154, 205, 50, 0.7);
+}
+
+.App {
+  text-align: center;
+}
+
+.greeting {
+  color: rgb(126, 45, 45);
+}
