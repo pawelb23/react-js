@@ -6,4 +6,11 @@
 .main-styles {
   font-size: 25px;
   margin: 5px;
+  font-weight: bold;
+}
+
+.main-margin-top {
+  margin-top: 25px;
+  color: rgba(12, 56, 18, 0.885);
+  text-decoration: overline;
 }
