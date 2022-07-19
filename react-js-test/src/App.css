@@ -1,0 +1,9 @@
+h1 {
+    text-align: center;
+    border: solid black 3px;
+    padding: 10px;
+}
+
+div {
+    margin: 20px;
+}
