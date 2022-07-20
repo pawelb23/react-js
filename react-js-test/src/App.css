@@ -1,9 +1,10 @@
 h1 {
     text-align: center;
     border: solid black 3px;
-    padding: 10px;
+    border-radius: 1%;
+    padding: 5%;
 }
 
 div {
-    margin: 20px;
+    margin: 5% 15%;
 }
