@@ -1,3 +1,5 @@
+import { useState, useMemo } from "react";
+import { useReducer } from "react";
 import React from "react";
 import PropTypes from "prop-types";
 import "./App.css";
@@ -6,7 +8,6 @@ class ComponentClassOne extends React.Component {
   render() {
     return (
       <section className="info-section" style={stylesCSS}>
-        {" "}
         Nasz pierwszy komponent ...
       </section>
     );
@@ -56,14 +57,18 @@ class MainState extends React.Component {
 }
 
 // Do komponentu oprócz standardowych parametrów można również przekazywać
-// całe funkcje:
-const Button = (props) => {
-  return (
-    <button onClick={() => props.update(`New app name ${Date.now()} `)}>
-      Click button to update!
-    </button>
-  );
-};
+// // całe funkcje:
+// const Button = (props) => {
+//   return (
+//     <button
+//       onClick={() => {
+//         props.update(`New app name ${Date.now()} `);
+//       }}
+//     >
+//       Click button to update!
+//     </button>
+//   );
+// };
 
 // ===================
 
@@ -124,11 +129,142 @@ MainComponentWithTypeParameters.defaultPropsp = {
 // Jako alternatywy dla PropTypes można skorzystać z kompilatorów Flow lub TypeScript. Więcej informacji na temat walidacji oraz typów przyjomowanych danych znajduje się w oficjalnej dokumentacji: https://reactjs.org/docs/typechecking-with-proptypes.html
 
 // =================
+class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    // this.textOne = <span className="blue-color">blue</span>;
+    this.state = {
+      actuallState: true,
+      favoritecolor: <span className="red-color">red</span>, //to samo co niżej, ale inny zapis
+      favoritecolorTwo: <span className="blue-color">{"blue"}</span>, //to samo co wyżej, ale inny zapis
+    };
+  }
+  // shouldComponentUpdate() {
+  //   return true;
+  // }
+  changeColor = () => {
+    this.setState((prevState) => ({
+      actuallState: !prevState.actuallState,
+    }));
+  };
+  render() {
+    return (
+      <div>
+        <h1>
+          My Favorite Color is{" "}
+          {this.state.actuallState
+            ? this.state.favoritecolor
+            : this.state.favoritecolorTwo}
+        </h1>
+        <button type="button" onClick={this.changeColor}>
+          Change color
+        </button>
+      </div>
+    );
+  }
+}
+
+const initialTodos = [
+  {
+    id: 1,
+    titlee: "Todo 1",
+    complete: false,
+  },
+  {
+    id: 2,
+    titlee: "Todo 2",
+    complete: false,
+  },
+];
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "COMPLETE":
+      return state.map((todo) => {
+        if (todo.id === action.id) {
+          return { ...todo, complete: !todo.complete };
+        } else {
+          return todo;
+        }
+      });
+    default:
+      return state;
+  }
+};
+
+function Todos() {
+  const [todos, dispatch] = useReducer(reducer, initialTodos);
+
+  const handleComplete = (todo) => {
+    dispatch({ type: "COMPLETE", id: todo.id });
+  };
+
+  return (
+    <>
+      {todos.map((todo) => (
+        <div key={todo.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={todo.complete}
+              onChange={() => handleComplete(todo)}
+            />
+            {todo.titlee}
+          </label>
+        </div>
+      ))}
+    </>
+  );
+}
+
+const Appo = () => {
+  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState([]);
+  const calculation = useMemo(() => expensiveCalculation(count), [count]);
+
+  const increment = () => {
+    setCount((c) => c + 1);
+  };
+  const addTodo = () => {
+    setTodos((t) => [...t, "New Todo"]);
+  };
+
+  return (
+    <div>
+      <div>
+        <h2>My Todos</h2>
+        {todos.map((todo, index) => {
+          return <p key={index}>{todo}</p>;
+        })}
+        <button onClick={addTodo}>Add Todo</button>
+      </div>
+      <hr />
+      <div>
+        Count: {count}
+        <button onClick={increment}>+</button>
+        <h2>Expensive Calculation</h2>
+        {calculation}
+      </div>
+    </div>
+  );
+};
+
+const expensiveCalculation = (num) => {
+  console.log("Calculating...");
+  for (let i = 0; i < 10; i++) {
+    console.log(i);
+    num += 1;
+  }
+  return num;
+};
 
 class App extends React.Component {
   render() {
     return (
       <div>
+        <Appo />
+        <Todos />
+        <Header />
         <ComponentClassOne />
         <StatelessComponent />
         <StateComponent />
