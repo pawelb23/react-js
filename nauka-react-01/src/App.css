@@ -1,16 +1,28 @@
+body {
+    background-color: rgba(0, 208, 255, 0.5);
+}
+
 .info-section {
-  color: darkblue;
-  font-size: 35px;
+    color: darkblue;
+    font-size: 35px;
 }
 
 .main-styles {
-  font-size: 25px;
-  margin: 5px;
-  font-weight: bold;
+    font-size: 25px;
+    margin: 5px;
+    font-weight: bold;
 }
 
 .main-margin-top {
-  margin-top: 25px;
-  color: rgba(12, 56, 18, 0.885);
-  text-decoration: overline;
+    margin-top: 25px;
+    color: rgba(12, 56, 18, 0.885);
+    text-decoration: overline;
+}
+
+.red-color {
+    color: red;
+}
+
+.blue-color {
+    color: blue;
 }
